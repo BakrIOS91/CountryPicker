@@ -29,7 +29,7 @@ public struct Country: Codable, Identifiable, Hashable {
     }
     
     
-    static var emptyCountry: Self {
+    public static var emptyCountry: Self {
         .init(
             id: 0,
             name: "",
