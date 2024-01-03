@@ -7,16 +7,19 @@ public struct CountryPickerView<Content: View, NoData: View>: View {
     @Binding private var selectedCountry: Country
     @State private var showCountriesList: Bool = false
     
+    private var locale: Locale
     private var sheetTitle: LocalizedStringKey = ""
     private var content: Content
     private var noData: () -> NoData
     
     public init(
+        locale: Locale,
         selectedCountry: Binding<Country>,
         sheetTitle: LocalizedStringKey,
         @ViewBuilder content: () -> Content,
         @ViewBuilder noData: @escaping () -> NoData
     ) {
+        self.locale = locale
         self._selectedCountry = selectedCountry
         self.sheetTitle = sheetTitle
         self.content = content()
@@ -32,6 +35,7 @@ public struct CountryPickerView<Content: View, NoData: View>: View {
         .buttonStyle(.plain)
         .sheet(isPresented: $showCountriesList) {
             CountryListView(
+                locale: locale,
                 title: sheetTitle,
                 selectedCountry: $selectedCountry,
                 noDataView: noData
@@ -46,6 +50,7 @@ struct CountryPickerExample: View {
     
     var body: some View {
         CountryPickerView(
+            locale: Locale(identifier: "ar_SA"),
             selectedCountry: $selectedCountry,
             sheetTitle: "Countries"
         ) {

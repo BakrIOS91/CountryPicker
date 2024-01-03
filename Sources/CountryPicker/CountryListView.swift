@@ -14,14 +14,17 @@ struct CountryListView<NoData: View> : View {
     @State private var searchText: String = ""
 
     @Binding private var selectedCountry: Country
+    private var locale: Locale
     private var title: LocalizedStringKey
     private var noDataView: () -> NoData
     
     init(
+        locale: Locale,
         title: LocalizedStringKey,
         selectedCountry: Binding<Country>,
         @ViewBuilder noDataView: @escaping () -> NoData
     ) {
+        self.locale = locale
         self.title = title
         self._selectedCountry = selectedCountry
         self.noDataView = noDataView
@@ -81,7 +84,7 @@ struct CountryListView<NoData: View> : View {
     private func fetchCountries() async {
         do {
             // Determine the appropriate file name based on language
-            let languageCode = Locale.current.languageCode?.prefix(2) // Get only the first two characters
+            let languageCode = locale.languageCode?.prefix(2) // Get only the first two characters
             let filename = languageCode == "ar" ? "Countries_Ar" : "Countries_En"
             
             // Access the file using Bundle.module for package context
@@ -108,6 +111,7 @@ struct CountryListViewer: View {
     
     var body: some View {
         CountryListView(
+            locale: Locale(identifier: "ar_SA") ,
             title: "Countries",
             selectedCountry: $selectedCountry) {
                 Text("No Data View")
