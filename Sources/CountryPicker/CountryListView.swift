@@ -81,7 +81,8 @@ struct CountryListView<NoData: View> : View {
     private func fetchCountries() async {
         do {
             // Determine the appropriate file name based on language
-            let filename = Locale.current.languageCode == "ar" ? "Countries_Ar" : "Countries_En"
+            let languageCode = Locale.current.languageCode?.prefix(2) // Get only the first two characters
+            let filename = languageCode == "ar" ? "Countries_Ar" : "Countries_En"
             
             // Access the file using Bundle.module for package context
             guard let fileURL = Bundle.module.url(forResource: filename, withExtension: "json"),
