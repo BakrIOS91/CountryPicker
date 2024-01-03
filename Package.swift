@@ -23,7 +23,8 @@ let package = Package(
             name: "CountryPicker",
             dependencies: [],
             resources: [
-                .copy("Data/Countries.json")
+                .copy("Data/Countries_Ar.json"),
+                .copy("Data/Countries_En.json")
             ]
         ),
         .testTarget(
