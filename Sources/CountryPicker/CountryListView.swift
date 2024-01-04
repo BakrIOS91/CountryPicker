@@ -61,6 +61,7 @@ struct CountryListView<NoData: View> : View {
                         }
                     }
                     .searchable(text: $searchText)
+                    .environment(\.layoutDirection, locale.languageCode == "ar" ? .rightToLeft : .leftToRight)
                 }
             }
             .task {
